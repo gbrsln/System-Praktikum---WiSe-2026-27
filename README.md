@@ -1,2 +1,2 @@
-# System-Praktikum---WiSe-2026-27
-Es gelte nur Zweck für Übungen sowie Projekte von der C-Programmierung des Moduls "System Praktikum" von der LMU
+# System Praktikum---WiSe-2026-27
+During this semester we are trying to programming a game "Reversi" in C
