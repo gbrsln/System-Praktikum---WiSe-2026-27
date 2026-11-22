@@ -1,0 +1,3 @@
+Der Bearbeitungszeitraum für MS-01 ist vom 23.11.2026 bis 29.11.2026
+
+Mein Teil laut dem Projektplanung ist Prolog klären, mit dem ich die erste Protokollphase der Kommunikation mit dem Gameserver implementieren soll und auch die TCP-Verbindung zum Gameserver des rechten Prozesses(Connector) darstelle.
