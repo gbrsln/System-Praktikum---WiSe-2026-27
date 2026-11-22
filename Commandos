@@ -1,0 +1,17 @@
+/* Bestehende Datein hinzufügen:
+cd Reversi
+git status
+git add .
+git commit -m "Update Reversi"
+git push
+*/
+
+/* Neue Dateiein hinzufügen:
+git add main.c network.c
+git commit -m "Add new files to Reversi"
+git push
+*/
+
+/* Aktuelle Version von GitHub herunterladen: 
+gitpull
+*/
