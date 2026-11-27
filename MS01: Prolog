@@ -1,0 +1,265 @@
+
+# MS01 – Prolog
+
+![Language](https://img.shields.io/badge/Language-C-blue)
+![Platform](https://img.shields.io/badge/Platform-Linux-orange)
+![Build](https://img.shields.io/badge/Build-GNU%20Make-green)
+![Status](https://img.shields.io/badge/Status-In%20Development-yellow)
+
+**Systempraktikum – LMU München**  
+**Wintersemester 2026/27 | Gruppe 3**
+
+---
+
+## 1. Ziel des Meilensteins
+
+Ziel des ersten Meilensteins ist die Implementierung
+der ersten Protokollphase (Prolog) zwischen unserem
+Reversi-Client und dem MNM-Gameserver.
+
+Der Client soll eine TCP-Verbindung zum Gameserver
+herstellen, einer bestehenden Reversi-Partie beitreten
+und sämtliche relevanten Spiel- und Spielerinformationen
+empfangen, verarbeiten und formatiert ausgeben.
+
+---
+
+## 2. Funktionale Anforderungen
+
+- [ ] Verarbeitung der Kommandozeilenparameter
+- [ ] Validierung der 13-stelligen Game-ID
+- [ ] Verarbeitung der gewünschten Spielernummer
+- [ ] Auflösung des Server-Hostnamens
+- [ ] Aufbau einer TCP-Verbindung zum Gameserver
+- [ ] Implementierung von `performConnection()`
+- [ ] Überprüfung der Protokollversion
+- [ ] Übermittlung der Game-ID
+- [ ] Überprüfung der Spielart (Reversi)
+- [ ] Verarbeitung der Spielerinformationen
+- [ ] Formatierte Ausgabe der Serverinformationen
+- [ ] Fehlerbehandlung bei Netzwerk- und Protokollfehlern
+- [ ] Erstellung eines Makefiles
+- [ ] Testen der Kommunikation mit dem Gameserver
+
+---
+
+## 3. Technische Grundlagen
+
+| Komponente | Technologie |
+|---|---|
+| Programmiersprache | C |
+| Betriebssystem | Linux |
+| Compiler | GCC / Clang |
+| Build-System | GNU Make |
+| Netzwerkprotokoll | TCP |
+| Versionsverwaltung | Git |
+| Spielart | Reversi |
+
+### Serverkonfiguration
+
+| Parameter | Wert |
+|---|---|
+| HOSTNAME | sysprak.priv.lab.nm.ifi.lmu.de |
+| PORTNUMBER | 1357 |
+| GAMEKINDNAME | Reversi |
+| Protokollversion | 2.x |
+
+---
+
+## 4. Protokollablauf
+
+Die Kommunikation erfolgt über ein zeilenorientiertes
+TCP-Protokoll.
+
+- `S:` Gameserver
+- `C:` Client
+- `+` Positive Serverantwort
+- `-` Negative Serverantwort
+- `\n` Abschluss einer Protokollzeile
+
+```text
+S: + MNM Gameserver v2.x accepting connections
+C: VERSION 2.0
+S: + Client version accepted - please send Game-ID to join
+C: ID <GAME-ID>
+S: + PLAYING Reversi
+S: + <GAME-NAME>
+C: PLAYER
+S: + YOU <PLAYER-NUMBER> <PLAYER-NAME>
+S: + TOTAL <PLAYER-COUNT>
+S: + <PLAYER-NUMBER> <PLAYER-NAME> <READY>
+S: + ENDPLAYERS
+```
+
+Nach dem Empfang von `ENDPLAYERS` ist die
+Protokollphase des Prologs abgeschlossen.
+
+---
+
+## 5. Softwarearchitektur
+
+```mermaid
+flowchart TD
+    A[main] --> B[Kommandozeilenparameter]
+    B --> C[getaddrinfo]
+    C --> D[socket]
+    D --> E[connect]
+    E --> F[performConnection]
+    F --> G[Prolog verarbeiten]
+    G --> H[Spielerinformationen ausgeben]
+    H --> I[Verbindung schließen]
+```
+
+### Relevante C-Funktionen
+
+| Funktion | Beschreibung |
+|---|---|
+| `getaddrinfo()` | Auflösung der Serveradresse |
+| `socket()` | Erstellung eines Sockets |
+| `connect()` | Aufbau der TCP-Verbindung |
+| `send()` | Übermittlung von Daten |
+| `recv()` | Empfang von Daten |
+| `close()` | Schließen des Sockets |
+| `freeaddrinfo()` | Freigabe der Adressinformationen |
+| `perror()` | Ausgabe systembezogener Fehlermeldungen |
+
+---
+
+## 6. Vorgeschlagene Projektstruktur
+
+```text
+MS01/
+├── main.c
+├── connection.c
+├── connection.h
+├── performConnection.c
+├── performConnection.h
+├── protocol.c
+├── protocol.h
+├── Makefile
+└── README.md
+```
+
+| Datei | Verantwortlichkeit |
+|---|---|
+| main.c | Programmeinstieg und Kommandozeilenparameter |
+| connection.c | Aufbau der TCP-Verbindung |
+| connection.h | Schnittstelle der Netzwerkverbindung |
+| performConnection.c | Implementierung des Prologs |
+| performConnection.h | Schnittstelle des Prologs |
+| protocol.c | Verarbeitung der Protokollnachrichten |
+| protocol.h | Definition der Protokollschnittstelle |
+| Makefile | Automatisierter Build-Prozess |
+
+---
+
+## 7. Kompilierung und Ausführung
+
+### Kompilierung
+
+```bash
+make
+```
+
+Der Compiler soll mindestens die folgenden
+Compiler-Flags verwenden:
+
+```makefile
+CC = gcc
+CFLAGS = -Wall -Wextra
+```
+
+### Ausführung
+
+```bash
+./sysprak-client -g <GAME-ID> -p <PLAYER-NUMBER>
+```
+
+Beispiel:
+
+```bash
+./sysprak-client -g 1234567890123 -p 1
+```
+
+Die Game-ID ist ein Beispiel und muss durch die
+ID einer tatsächlich existierenden Partie ersetzt werden.
+
+In MS01 wird das PLAYER-Kommando gemäß Aufgabenstellung
+noch ohne Spielernummer an den Gameserver gesendet.
+
+### Bereinigung
+
+Sofern ein clean-Target implementiert wurde:
+
+```bash
+make clean
+```
+
+---
+
+## 8. Aufgabenverteilung
+
+| Person | Verantwortlichkeit |
+|---|---|
+| A | Protokolldefinition und TCP-Verbindungsaufbau |
+| B | Kommandozeilenparameter, Makefile und Mock-Server |
+| C | Zeilenpuffer und Debug-Logging |
+| D | Implementierung von performConnection() |
+
+**Meilenstein-Lead:** C
+
+**Zeitraum:** 23.11.2026 – 29.11.2026
+
+**Integration:** 27.11.2026
+
+---
+
+## 9. Testfälle
+
+| ID | Testfall | Erwartetes Ergebnis |
+|---|---|---|
+| T01 | Gültige Game-ID | Erfolgreicher Prolog |
+| T02 | Ungültige Game-ID | Kontrollierte Fehlermeldung |
+| T03 | Fehlende Game-ID | Fehlermeldung und Programmabbruch |
+| T04 | Ungültige Länge der Game-ID | Eingabe wird abgelehnt |
+| T05 | Gameserver nicht erreichbar | Kontrollierte Fehlerbehandlung |
+| T06 | Inkompatible Protokollversion | Verbindung wird beendet |
+| T07 | Falsche Spielart | Verbindung wird beendet |
+| T08 | Alle Spielerplätze belegt | Serverfehler wird verarbeitet |
+| T09 | Negative Serverantwort | Kontrollierter Programmabbruch |
+| T10 | Regulärer Verbindungsabbau | Ressourcen werden freigegeben |
+
+---
+
+## 10. Definition of Done
+
+MS01 gilt als abgeschlossen, wenn:
+
+- [ ] Das Programm erfolgreich kompiliert.
+- [ ] Keine Compilerwarnungen auftreten.
+- [ ] Die TCP-Verbindung zuverlässig aufgebaut wird.
+- [ ] Der vollständige Prolog verarbeitet wird.
+- [ ] Alle Spielerinformationen korrekt ausgegeben werden.
+- [ ] Netzwerk- und Protokollfehler behandelt werden.
+- [ ] Keine Speicherlecks vorhanden sind.
+- [ ] Die Implementierung einem Code-Review unterzogen wurde.
+- [ ] Alle relevanten Testfälle erfolgreich abgeschlossen sind.
+- [ ] Der Code in den Integrationsbranch übernommen wurde.
+
+---
+
+## 11. Ausblick auf MS02
+
+Im nächsten Meilenstein wird der Client um folgende
+Komponenten erweitert:
+
+- Konfigurationsdatei (`client.conf`)
+- Aufteilung in Thinker- und Connector-Prozess
+- Prozesserzeugung mittels `fork()`
+- Interprozesskommunikation über Shared Memory
+- Verwaltung und Freigabe gemeinsam genutzter Ressourcen
+
+---
+
+**LMU München – Systempraktikum WS 2026/27**  
+**Projekt: Reversi-Client in C | Gruppe 3**
