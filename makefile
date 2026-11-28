@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -std=c11 -Wall -Wextra -Werror -g
+CFLAGS = -std=c17 -Wall -Wextra -Werror -g
 
 TARGET = test_connection
 MOCK_TARGET = test_connection_mock
