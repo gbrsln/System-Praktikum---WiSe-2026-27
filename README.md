@@ -101,7 +101,7 @@ Dadurch kann dieselbe Netzwerkimplementierung sowohl für den produktiven Gamese
 ### Standardkonfiguration
 
 ```bash
-gcc -std=c11 -Wall -Wextra -Werror -g \
+gcc -std=c17 -Wall -Wextra -Werror -g \
     connection.c test_connection.c \
     -o test_connection
 ```
@@ -115,7 +115,7 @@ Ausführung:
 ### Mock-Server-Konfiguration
 
 ```bash
-gcc -std=c11 -Wall -Wextra -Werror -g \
+gcc -std=c17 -Wall -Wextra -Werror -g \
     -DHOSTNAME='"127.0.0.1"' \
     -DPORTNUMBER=13570 \
     connection.c test_connection.c \
@@ -188,6 +188,6 @@ Die Implementierung der Prolog-Phase, der Kommandozeilenparameter und der vollst
 - Gruppe: 03
 - Projekt: Reversi-Client
 - Meilenstein: MS01 – Teil A
-- Programmiersprache: C11
+- Programmiersprache: C17
 - Branch: `MS01/Teil-A`
 
