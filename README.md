@@ -152,7 +152,7 @@ Vorgesehener Programmablauf:
 main()
     |
     v
-connectToServer()
+connectToGameserver()
     |
     +-- getaddrinfo()
     +-- socket()
@@ -184,10 +184,10 @@ Die Implementierung der Prolog-Phase, der Kommandozeilenparameter und der vollst
 
 - Veranstaltung: Systempraktikum
 - Universität: Ludwig-Maximilians-Universität München
-- Semester: WS 2026/27
+- Semester: WiSe 2026/27
 - Gruppe: 03
 - Projekt: Reversi-Client
-- Meilenstein: MS01 – Teil A
+- Meilenstein: MS01
 - Programmiersprache: C17
 - Branch: `MS01/Teil-A`
 
