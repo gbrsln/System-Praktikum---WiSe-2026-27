@@ -30,7 +30,7 @@ Die Implementierung stellt einen gültigen Socket-File-Descriptor bereit, der an
 ## 4. Funktionsschnittstelle
 
 ```c
-int connectToServer(void);
+int connectToGameserver(void);
 ```
 
 **Rückgabewerte:**
